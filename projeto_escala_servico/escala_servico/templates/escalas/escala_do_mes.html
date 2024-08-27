@@ -12,29 +12,35 @@
 <body>
   <div class="container">
     <div class="col-12">
-      <h1>Mês atual</h1>
+      <h1>{{ mes_atual }}</h1>
       <table class="table table-light">
         <thead>
           <tr>
-            <th scope="col" class="col-2 dia-semana">Segunda-feira</th>
-            <th scope="col" class="col-2 dia-semana">terça-feira</th>
-            <th scope="col" class="col-2 dia-semana">quarta-feira</th>
-            <th scope="col" class="col-2 dia-semana">quinta-feira</th>
-            <th scope="col" class="col-2 dia-semana">sexta-feira</th>
-            <th scope="col" class="col-1 dia-semana">sabado</th>
-            <th scope="col" class="col-1 dia-semana">domingo</th>
+            {% for dia in dias_semana %}
+              {% if dia == "Sábado" or dia == Domingo %}
+                <th scope="col" class="col-1 dia-semana">{{ dia }}</th>
+              {% else %}
+                <th scope="col" class="col-2 dia-semana">{{ dia }}</th>
+              {% endif %}
+            {% endfor %}
           </tr>
         </thead>
         <tbody>
-          {% for semana in cal %}
-          <tr>
-            {% for dia in semana %}
-              {% if dia == 0 %}
-                <td class="dia-mes"></td>
-              {% else %}
-                <td class="dia-mes">{{ dia }}</td>
-              {% endif %}
-            {% endfor %}
+          {% for semana in mes %}
+            <tr>
+              {% for dia in semana %}
+                <!-- verificação de dias nulos -->
+                {% if 0 in dia %}
+                  <td class="dia-mes"></td> 
+                {% else %}
+                <!-- verificar se sábado ou domingo -->
+                  {% if "Sábado" in dia or "Domingo" in dia %}
+                    <td class="dia-mes">{{ dia.1 }}</td>
+                  {% else %}
+                    <td class="dia-mes">{{ dia.1 }} <p>Nome de fulano</p></td>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
             </tr>
           {% endfor %}
         </tbody>
