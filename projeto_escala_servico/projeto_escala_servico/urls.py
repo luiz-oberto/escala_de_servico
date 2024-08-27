@@ -20,5 +20,5 @@ from escala_servico import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.escala,name='escala_do_mes')
+    path('', views.escala, name='escala_do_mes')
 ]
