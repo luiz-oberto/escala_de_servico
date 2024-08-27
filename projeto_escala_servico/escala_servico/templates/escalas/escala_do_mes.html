@@ -12,12 +12,14 @@
 <body>
   <div class="container">
     <div class="col-12">
-      <h1>{{ mes_atual }}</h1>
+      <div class="row">
+        <h1>{{ mes_atual }}</h1>
+      </div>
       <table class="table table-light">
         <thead>
           <tr>
             {% for dia in dias_semana %}
-              {% if dia == "Sábado" or dia == Domingo %}
+              {% if dia == "Sábado" or dia == "Domingo" %}
                 <th scope="col" class="col-1 dia-semana">{{ dia }}</th>
               {% else %}
                 <th scope="col" class="col-2 dia-semana">{{ dia }}</th>

@@ -1,19 +1,8 @@
-'''
-### código para montar o calendário 
-obs: execute este código em outro ambiente ou no terminal
-import datetime
-
-for i in range(1, 31, 1): # começa de 1,vai até 30 de 1 passo em 1
-    x = datetime.datetime(2024, 4, i)
-    print(x.strftime("%A"), i)
-
-'''
 from django.shortcuts import render
 from datetime import date
 import calendar
 
 
-# Create your views here.
 def escala(request):
     meses_do_ano = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
     dias_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"]
@@ -31,7 +20,6 @@ def escala(request):
 
 
     for semana in cal:
-        # list_dias.append(zip(dias_semana, semana))
         dias_do_mes = zip(dias_semana, semana)
         list_mes.append(list(dias_do_mes))
 
