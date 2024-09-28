@@ -1,2 +1,8 @@
 # escala_de_servico
-Este é um projeto simples no qual utilizo django com o auxilio do bootstrap para estilização de um calendário em que cada dia vai conter os nomes de quem vai assumir o serviço.
+Este é um projeto feito com o objetivo de montar uma escala de serviço em que cada dia de segunda a sexta vai conter um nome, indicando assim o dia de serviço dessa pessoa.
+
+Este projeto utiliza:
+- python
+- Django
+- Bootstrap 5
+- banco de dados: SQLite (até agora)
