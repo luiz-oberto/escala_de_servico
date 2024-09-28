@@ -18,7 +18,7 @@
       <table class="table table-light">
         <thead>
           <tr>
-            {% for dia in dias_semana %}
+            {% for dia in dias_da_semana %}
               {% if dia == "Sábado" or dia == "Domingo" %}
                 <th scope="col" class="col-1 dia-semana">{{ dia }}</th>
               {% else %}
@@ -27,7 +27,11 @@
             {% endfor %}
           </tr>
         </thead>
+
         <tbody>
+
+
+
           {% for semana in mes %}
             <tr>
               {% for dia in semana %}
@@ -40,13 +44,19 @@
                     <td class="dia-mes">{{ dia.1 }}</td>
                   {% else %}
                     {% comment %} inserir o nome dos escalados {% endcomment %}
-                    <td class="dia-mes">{{ dia.1 }} <p>Fulano</p></td>
+                    <td class="dia-mes">
+                      {{ dia.1 }}
+                      <!-- um militar por dia -->
+                      <p>{{ militar.0 }}</p>
+                    </td>
                   {% endif %}
                 {% endif %}
               {% endfor %}
             </tr>
           {% endfor %}
         </tbody>
+
+
       </table>
     </div>
   </div>
