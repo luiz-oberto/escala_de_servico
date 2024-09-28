@@ -39,7 +39,8 @@
                   {% if "Sábado" in dia or "Domingo" in dia %}
                     <td class="dia-mes">{{ dia.1 }}</td>
                   {% else %}
-                    <td class="dia-mes">{{ dia.1 }} <p>Nome de fulano</p></td>
+                    {% comment %} inserir o nome dos escalados {% endcomment %}
+                    <td class="dia-mes">{{ dia.1 }} <p>Fulano</p></td>
                   {% endif %}
                 {% endif %}
               {% endfor %}
@@ -51,3 +52,7 @@
   </div>
 </body>
 </html>
+
+
+
+

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from datetime import date
+from escala_servico.models import Militar 
 import calendar
 
 
@@ -7,6 +8,8 @@ def escala(request):
     meses_do_ano = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
     dias_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"]
     list_mes =[]
+    militares = Militar.objects.order_by('antiguidade')
+    print(militares)
     
     data_hoje = date.today()
     mes_atual = data_hoje.month
@@ -16,7 +19,14 @@ def escala(request):
     print(mes)
 
     cal = calendar.monthcalendar(ano_atual, mes_atual)
+    # cal = calendar.monthcalendar(2024, 9)
 
+    context = {
+        'militar': militares,
+        'mes_atual':mes,
+        'dias_semana': dias_semana,
+        "mes": list_mes
+    }
 
 
     for semana in cal:
