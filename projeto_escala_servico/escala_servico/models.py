@@ -16,3 +16,8 @@ class Militar(models.Model):
 
     def __str__(self) -> str:
         return f'{self.nome_de_guerra}'
+    
+class Escala(models.Model):
+    data = models.DateField(unique=True)
+    pessoa = models.ForeignKey('Militar', on_delete=models.CASCADE, null=True)
+    mes_referencia = models.DateField(null=True, blank=True)

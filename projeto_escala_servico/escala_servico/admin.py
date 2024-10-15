@@ -6,3 +6,8 @@ from escala_servico import models
 class IndividuoAdmin(admin.ModelAdmin):
     list_display = 'id', 'graduacao', 'nome_de_guerra', 'antiguidade', 'ultimo_a_dar_servico',
     ordering = 'antiguidade',
+
+@admin.register(models.Escala)
+class EscalaAdmin(admin.ModelAdmin):
+    list_display = 'data', 'pessoa',
+    ordering = 'data',
