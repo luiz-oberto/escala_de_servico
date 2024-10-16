@@ -8,8 +8,9 @@ from django.db.models import Q
 def atualizar_escala():
     # pega a data de hoje
     hoje = date.today()
+    # hoje.weekday()
     # altera o dia data atual para o primeiro dia do mês
-    inicio_mes_atual = hoje.replace(day=1)
+    inicio_mes_atual = hoje.replace(day=1, month=9)
 
     # pegar o dia da semana (hoje)
     # weekday = date.weekday(hoje)
@@ -45,7 +46,7 @@ def preencher_escala():
 def escala(request):
     escala = atualizar_escala()
     meses_do_ano = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-    
+
     data_hoje = date.today()
     mes_atual = data_hoje.month
     ano_atual = data_hoje.year
@@ -55,9 +56,27 @@ def escala(request):
     # cal = calendar.monthcalendar(2024, 9)
     # print("calendário:", cal)
 
+    data = Escala.objects.order_by('data')
+    for dia in data:
+        if dia.data.day == 1:
+            primeiro_dia_da_semana = dia.data.weekday()
+            print("primeiro dia da semana:", primeiro_dia_da_semana)
+        print(dia.data, dia.pessoa, dia.data.weekday())
+    
+    list_qtd_quadrados = []
+    for i in range(primeiro_dia_da_semana):
+        # print('Adicionando um quadrado')
+        list_qtd_quadrados.append(0)
+
+    qtd_list = len(list_qtd_quadrados)
+    print('tamanho da lista', qtd_list)
+
     context = {
         'mes_atual':mes,
-        "mes": cal,
+        'data': data,
+        'qtd_quadrados': list_qtd_quadrados,
+        'tamanho_lista': qtd_list,
+        # "mes": cal,
         'escala': escala
     }
 
