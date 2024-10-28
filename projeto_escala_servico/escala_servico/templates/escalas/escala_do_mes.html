@@ -32,6 +32,7 @@
 
         <tbody>
           <!-- Datas do mês -->
+           
           <tr>
             <!-- preencher a primeira semana -->
             {% for i in qtd_quadrados %}
@@ -40,9 +41,24 @@
 
             {% for dia in data %}
               {% if tamanho_lista != 7 %}
-                <td class="dia-mes">{{ dia.data.weekday }} {{ dia.data.day }} {{ dia.pessoa }}</td>
+                <td class="dia-mes">
+                  <p>{{ dia.data.day }}</p> 
+                  <p>{{ dia.pessoa }}</p>
+                </td>
               {% endif %}
             {% endfor %}
+          </tr>
+          <tr>
+            <td>segunda linha</td>
+          </tr>
+          <tr>
+            <td>Terceira linha</td>
+          </tr>
+          <tr>
+            <td>Quarta linha</td>
+          </tr>
+          <tr>
+            <td>quinta linha</td>
           </tr>
 
         </tbody>
