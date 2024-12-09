@@ -20,47 +20,23 @@
         <thead>
           <tr>
             <!-- Dias da semana -->
-             <th scope="col" class="col-1 dia-semana">Segunda-feira</th>
-             <th scope="col" class="col-1 dia-semana">Terça-feira</th>
-             <th scope="col" class="col-1 dia-semana">Quarta-feira</th>
+             <th scope="col" class="col-1 dia-semana">Dia da Semana</th>
+             <th scope="col" class="col-1 dia-semana">Escalados</th>
+             {% comment %} <th scope="col" class="col-1 dia-semana">Quarta-feira</th>
              <th scope="col" class="col-1 dia-semana">Quinta-feira</th>
              <th scope="col" class="col-1 dia-semana">Sexta-feira</th>
              <th scope="col" class="col-1 dia-semana">Sábado</th>
-             <th scope="col" class="col-1 dia-semana">Domingo</th>
+             <th scope="col" class="col-1 dia-semana">Domingo</th> {% endcomment %}
           </tr>
         </thead>
 
         <tbody>
-          <!-- Datas do mês -->
-           
-          <tr>
-            <!-- preencher a primeira semana -->
-            {% for i in qtd_quadrados %}
-              <td class="dia-mes"></td>
-            {% endfor %}
-
-            {% for dia in data %}
-              {% if tamanho_lista != 7 %}
-                <td class="dia-mes">
-                  <p>{{ dia.data.day }}</p> 
-                  <p>{{ dia.pessoa }}</p>
-                </td>
-              {% endif %}
-            {% endfor %}
-          </tr>
-          <tr>
-            <td>segunda linha</td>
-          </tr>
-          <tr>
-            <td>Terceira linha</td>
-          </tr>
-          <tr>
-            <td>Quarta linha</td>
-          </tr>
-          <tr>
-            <td>quinta linha</td>
-          </tr>
-
+          {% for i in escala %}
+            <tr>
+              <td class="dia-mes">{{ i }}</td>
+              <td class="dia-mes">isso é outor teste</td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>

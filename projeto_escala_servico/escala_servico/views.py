@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from escala_servico.models import Militar, Escala
-import calendar
 from datetime import date, timedelta
 from django.db.models import Q
+
 
 # Função para deletar a escala do mês anterior e gerar nova
 def atualizar_escala():
@@ -28,7 +28,7 @@ def atualizar_escala():
             # if mes tiver 31 dias:
 
             # if mes tiver 30 dias:
-            
+
         for i in range(efetivo):  # Supondo que serão 5 pessoas na primeira semana
             data_escala = inicio_mes_atual + timedelta(days=i) # soma mais um dia
             # print('data escala: ', data_escala)
@@ -42,30 +42,20 @@ def atualizar_escala():
 
 def escala(request):
     escala = atualizar_escala()
+    escala_do_mes = Escala.objects.order_by('data')
+    print('Escala do mes', escala_do_mes.values())
+
     meses_do_ano = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
     data_hoje = date.today()
     mes_atual = data_hoje.month
     # ano_atual = data_hoje.year
     mes = meses_do_ano[mes_atual-1]
-
-
-
-    data = Escala.objects.order_by('data')
-    for dia in data:
-        if dia.data.day == 1:
-            primeiro_dia_da_semana = dia.data.weekday()
-            print("primeiro dia da semana:", primeiro_dia_da_semana) # Printa o dia ferial em que começa o mês
-        print(dia.data, dia.pessoa)
     
-    list_qtd_quadrados_em_branco = []
-    for i in range(primeiro_dia_da_semana):
-        list_qtd_quadrados_em_branco.append(0)
-
+    
+    
     context = {
         'mes_atual':mes, # Exibe o mês atual
-        'data': data,
-        'qtd_quadrados': list_qtd_quadrados_em_branco,
         'escala': escala,
     }
 
