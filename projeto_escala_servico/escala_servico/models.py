@@ -21,3 +21,7 @@ class Escala(models.Model):
     data = models.DateField(unique=True)
     pessoa = models.ForeignKey('Militar', on_delete=models.CASCADE, null=True)
     mes_referencia = models.DateField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.data} - {self.pessoa}'
+

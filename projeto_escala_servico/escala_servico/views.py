@@ -42,8 +42,8 @@ def atualizar_escala():
 
 def escala(request):
     escala = atualizar_escala()
-    escala_do_mes = Escala.objects.order_by('data')
-    print('Escala do mes', escala_do_mes.values())
+    data_escala = list(Escala.objects.all())
+    print('Escala do mes', data_escala)
 
     meses_do_ano = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
@@ -51,6 +51,7 @@ def escala(request):
     mes_atual = data_hoje.month
     # ano_atual = data_hoje.year
     mes = meses_do_ano[mes_atual-1]
+
     
     
     
