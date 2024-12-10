@@ -10,33 +10,31 @@
   <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-  <div class="container">
-    <div class="col-12">
-      <div class="row">
-        <!-- Exibe o mês atual -->
-        <h1>{{ mes_atual }}</h1>
-      </div>
-      <table class="table table-light">
-        <thead>
-          <tr>
-            <!-- Dias da semana -->
-             <th scope="col" class="col-1 dia-semana">Dia da Semana</th>
-             {% comment %} <th scope="col" class="col-1 dia-semana">Quarta-feira</th>
-             <th scope="col" class="col-1 dia-semana">Quinta-feira</th>
-             <th scope="col" class="col-1 dia-semana">Sexta-feira</th>
-             <th scope="col" class="col-1 dia-semana">Sábado</th>
-             <th scope="col" class="col-1 dia-semana">Domingo</th> {% endcomment %}
-          </tr>
-        </thead>
-
-        <tbody>
-          {% for i in escala %}
+  <div class="container vertical">
+    <div class="row align-items-center justify-content-center">
+      <!-- Exibe o mês atual -->
+      <h1>{{ mes_atual }} {{ ano_atual }}</h1>
+        <div class="col-6">
+          <!-- tabela com a respectiva escala do mês -->
+        <table class="table table-light">
+          <thead>
             <tr>
-              <td class="dia-mes">{{ i }}</td>
+              <!-- Dias da semana -->
+              <th scope="col" class="col-1 dia-semana">Data</th>
+              <th scope="col" class="col-1 dia-semana">Militar escalado</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          
+          <tbody>
+            {% for dia in escala %}
+            <tr>
+              <td class="dia-mes">{{ dia.data|date:"d/m" }}</td>
+              <td class="dia-mes">{{ dia.pessoa.graduacao }} {{ dia.pessoa }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>
