@@ -50,6 +50,7 @@ def atualizar_escala():
         while i < quantidade_de_dias:
             data_escala = inicio_mes_atual + timedelta(days=i) # soma mais um dia
             pessoa_escalada = militares[i % len(militares)]
+            # if dias_da_semana[i] == 'domingo'
             Escala.objects.create(data=data_escala, pessoa=pessoa_escalada, dias_da_semana=dias_da_semana[i] ,  mes_referencia=inicio_mes_atual) #
             i+=1
 
@@ -67,5 +68,18 @@ def generate_weekday(ano_atual, mes_atual):
         (date(ano_atual, mes_atual, dia).strftime("%A"))  # Data e nome do dia
         for dia in range(1, dias_no_mes + 1)
     ]
+    # print(dias_da_semana.index('domingo'))
+    for dia in dias_da_semana:
+        # print(dia)
+        if dia == 'terÃ§a-feira':
+            index = dias_da_semana.index('terÃ§a-feira')
+            dias_da_semana.pop(index)
+            dias_da_semana.insert(index, 'terça-feira')
+        elif dia == 'sÃ¡bado':
+            index = dias_da_semana.index('sÃ¡bado')
+            dias_da_semana.pop(index)
+            dias_da_semana.insert(index, 'sábado')
+
+    print(dias_da_semana)
 
     return dias_da_semana

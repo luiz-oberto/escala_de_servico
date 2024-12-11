@@ -9,5 +9,5 @@ class IndividuoAdmin(admin.ModelAdmin):
 
 @admin.register(models.Escala)
 class EscalaAdmin(admin.ModelAdmin):
-    list_display = 'data', 'dias_da_semana', 'pessoa', 
+    list_display = 'data', 'dias_da_semana', 'pessoa',
     ordering = 'data',

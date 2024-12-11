@@ -4,8 +4,7 @@
 
 .dia-mes {
     border: 1px solid #ccc;
-    /* text-align: center; */
-    text-align: center;
+    text-align:left;
 }
 .row {
     text-align: center;
