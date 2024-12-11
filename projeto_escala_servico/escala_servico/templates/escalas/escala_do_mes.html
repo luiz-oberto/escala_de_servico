@@ -28,7 +28,7 @@
           <tbody>
             {% for dia in escala %}
             <tr>
-              <td class="dia-mes">{{ dia.data|date:"d/m" }}</td>
+              <td class="dia-mes">{{ dia.data|date:"d/m" }} - SEG</td>
               <td class="dia-mes">{{ dia.pessoa.graduacao }} {{ dia.pessoa }}</td>
             </tr>
             {% endfor %}

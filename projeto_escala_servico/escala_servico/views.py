@@ -7,15 +7,13 @@ import calendar
 data_hoje = date.today()
 mes_atual = data_hoje.month
 ano_atual = data_hoje.year
+dia_da_semana = data_hoje.isoweekday()
 
 # Função para deletar a escala do mês anterior e gerar nova
 def atualizar_escala():
-    # pega a data de hoje
-    # hoje = date.today()
     # altera o dia data atual para o primeiro dia do mês
     inicio_mes_atual = data_hoje.replace(day=1)
     quantidade_de_dias = calendar.monthrange(ano_atual, mes_atual)[1]
-    print(f"qtd dias mes: {quantidade_de_dias}")
 
     # Verificar se existe escala para o mês atual
     escala_mes_atual = Escala.objects.filter(mes_referencia=inicio_mes_atual)
@@ -26,30 +24,25 @@ def atualizar_escala():
 
         # Obter as pessoas e gerar nova escala para o mês
         militares = list(Militar.objects.order_by('-antiguidade'))
-        efetivo = len(militares)
-        # print('efetivo: ',efetivo)
+ 
 
         i = 0
         while i < quantidade_de_dias:
             data_escala = inicio_mes_atual + timedelta(days=i) # soma mais um dia
             print(data_escala)
-            pessoa_escalada = militares[i % len(militares)]  # Pode ser randomizado
+            pessoa_escalada = militares[i % len(militares)]
             print('Pessoa escalada: ',pessoa_escalada)
             Escala.objects.create(data=data_escala, pessoa=pessoa_escalada, mes_referencia=inicio_mes_atual)
             i+=1
-
-
-
-        # for i in range(efetivo):  # Supondo que serão 5 pessoas na primeira semana
 
     return Escala.objects.filter(mes_referencia=inicio_mes_atual)
 
 
 
 def escala(request):
+    print(dia_da_semana)
     escala = atualizar_escala()
     data_escala = Escala.objects.order_by('data')
-    print('Escala do mes', data_escala)
 
     meses_do_ano = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 

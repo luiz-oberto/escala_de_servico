@@ -19,6 +19,7 @@ class Militar(models.Model):
     
 class Escala(models.Model):
     data = models.DateField(unique=True)
+    # dia_da_semana = models.CharField(max_length=3, null=False)
     pessoa = models.ForeignKey('Militar', on_delete=models.CASCADE, null=True)
     mes_referencia = models.DateField(null=True, blank=True)
 
