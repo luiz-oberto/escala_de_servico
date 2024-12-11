@@ -6,6 +6,7 @@ class Militar(models.Model):
     nome_de_guerra = models.CharField(max_length=50)
     graduacao = models.CharField(max_length=10)
     antiguidade = models.CharField(max_length=4)
+    # variável abaixo pode sair #############################
     ultimo_a_dar_servico = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
@@ -20,7 +21,7 @@ class Militar(models.Model):
 class Escala(models.Model):
     data = models.DateField(unique=True)
     dias_da_semana = models.CharField(max_length=50)
-    pessoa = models.ForeignKey('Militar', on_delete=models.CASCADE, null=True)
+    pessoa = models.ForeignKey('Militar', on_delete=models.CASCADE, null=True, blank=True)
     mes_referencia = models.DateField(null=True, blank=True)
 
     def __str__(self):

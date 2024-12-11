@@ -27,10 +27,17 @@
           
           <tbody>
             {% for dia in escala %}
-            <tr>
-              <td class="dia-mes">{{ dia.data|date:"d/m" }} - {{ dia.dias_da_semana }}</td>
-              <td class="dia-mes">{{ dia.pessoa.graduacao }} {{ dia.pessoa }}</td>
-            </tr>
+              {% if dia.dias_da_semana == 'sábado' or dia.dias_da_semana == 'domingo' %}
+                <tr>
+                  <td class="dia-mes">{{ dia.data|date:"d/m" }} - {{ dia.dias_da_semana }}</td>
+                  <td class="dia-mes"> - </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td class="dia-mes">{{ dia.data|date:"d/m" }} - {{ dia.dias_da_semana }}</td>
+                  <td class="dia-mes">{{ dia.pessoa.graduacao }} {{ dia.pessoa }}</td>
+                </tr>
+              {% endif %}
             {% endfor %}
           </tbody>
         </table>

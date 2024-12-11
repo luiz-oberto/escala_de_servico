@@ -46,13 +46,18 @@ def atualizar_escala():
         militares = list(Militar.objects.order_by('-antiguidade'))
  
 
-        i = 0
-        while i < quantidade_de_dias:
-            data_escala = inicio_mes_atual + timedelta(days=i) # soma mais um dia
-            pessoa_escalada = militares[i % len(militares)]
-            # if dias_da_semana[i] == 'domingo'
-            Escala.objects.create(data=data_escala, pessoa=pessoa_escalada, dias_da_semana=dias_da_semana[i] ,  mes_referencia=inicio_mes_atual) #
-            i+=1
+        indice = 0
+        indice_militar = 0
+        while indice < quantidade_de_dias:
+            data_escala = inicio_mes_atual + timedelta(days=indice) # soma mais um dia
+            pessoa_escalada = militares[indice_militar % len(militares)]
+            if dias_da_semana[indice] == 'sábado' or dias_da_semana[indice] == 'domingo':
+                Escala.objects.create(data=data_escala, dias_da_semana=dias_da_semana[indice],  mes_referencia=inicio_mes_atual)
+                indice+=1
+            else:
+                Escala.objects.create(data=data_escala, pessoa=pessoa_escalada, dias_da_semana=dias_da_semana[indice] ,  mes_referencia=inicio_mes_atual)
+                indice+=1
+                indice_militar+=1
 
     return Escala.objects.filter(mes_referencia=inicio_mes_atual)
 
