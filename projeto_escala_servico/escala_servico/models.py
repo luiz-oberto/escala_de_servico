@@ -6,7 +6,7 @@ class Militar(models.Model):
     nome_de_guerra = models.CharField(max_length=50)
     graduacao = models.CharField(max_length=10)
     antiguidade = models.CharField(max_length=4)
-    # variável abaixo pode sair #############################
+    # disponibilidadde = models.BooleanField(default=True)
     ultimo_a_dar_servico = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
