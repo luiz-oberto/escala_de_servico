@@ -3,9 +3,7 @@ from escala_servico.models import Militar, Escala
 from datetime import date, timedelta
 from django.db.models import Q
 import calendar
-import locale
 
-locale.setlocale(locale.LC_TIME, "pt_br.UTF-8")
 
 data_hoje = date.today()
 mes_atual = data_hoje.month

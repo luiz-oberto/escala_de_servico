@@ -4,7 +4,7 @@ import calendar
 import locale
 
 
-locale.setlocale(locale.LC_TIME, "pt_br.UTF-8")
+locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
 # Create your models here.
 # mudar para Pessoal
@@ -65,20 +65,25 @@ class Escala(models.Model):
             # Obter as pessoas e gerar nova escala para o mês
             militares = list(Militar.objects.order_by('-antiguidade'))
 
-            indice = 0
-            indice_militar = 0
-            while indice < quantidade_de_dias:
-                data_escala = inicio_mes_atual + timedelta(days=indice)  # Soma mais um dia
-                pessoa_escalada = militares[indice_militar % len(militares)]
+            if militares:
+                indice = 0
+                indice_militar = 0
 
-                if dias_da_semana[indice] in ['sábado', 'domingo']:
-                    cls.objects.create(data=data_escala, dias_da_semana=dias_da_semana[indice], mes_referencia=inicio_mes_atual)
-                else:
-                    cls.objects.create(data=data_escala, pessoa=pessoa_escalada, dias_da_semana=dias_da_semana[indice], mes_referencia=inicio_mes_atual)
+                while indice < quantidade_de_dias:
+                    data_escala = inicio_mes_atual + timedelta(days=indice)  # Soma mais um dia
+                    pessoa_escalada = militares[indice_militar % len(militares)]
 
-                indice += 1
-                if dias_da_semana[indice - 1] not in ['sábado', 'domingo']:
-                    indice_militar += 1
+                    if dias_da_semana[indice] in ['sábado', 'domingo']:
+                        cls.objects.create(data=data_escala, dias_da_semana=dias_da_semana[indice], mes_referencia=inicio_mes_atual)
+                    else:
+                        cls.objects.create(data=data_escala, pessoa=pessoa_escalada, dias_da_semana=dias_da_semana[indice], mes_referencia=inicio_mes_atual)
+
+                    indice += 1
+                    if dias_da_semana[indice - 1] not in ['sábado', 'domingo']:
+                        indice_militar += 1
+            
+            else:
+                return print('Não há militares cadastrados.')
 
         return data_hoje, cls.objects.filter(mes_referencia=inicio_mes_atual)
 
