@@ -25,8 +25,6 @@ class Militar(models.Model):
     def __str__(self) -> str:
         return f'{self.nome_de_guerra}'
     
-    # def salvar_ultimo_que_deu_servico():
-
 
 
 
@@ -44,14 +42,14 @@ class Escala(models.Model):
 
     @classmethod
     def atualizar_escala(cls):
-        # data_hoje = date.today()
-        # ano_atual = data_hoje.year
-        # mes_atual = data_hoje.month
-
-        ##### DATAS PARA TESTES #########
-        data_hoje = date(2025, 5, 1)
+        data_hoje = date.today()
         ano_atual = data_hoje.year
         mes_atual = data_hoje.month
+
+        ##### DATAS PARA TESTES #########
+        # data_hoje = date(2025, 5, 1)
+        # ano_atual = data_hoje.year
+        # mes_atual = data_hoje.month
 
         # Altera o dia data atual para o primeiro dia do mês
         inicio_mes_atual = data_hoje.replace(day=1)
@@ -132,6 +130,7 @@ class Escala(models.Model):
     @staticmethod
     def verify_last_duty():
         militares = list(Militar.objects.order_by('-antiguidade'))
+        # Ajustar para caso não haja ninguém que tenha dado o último serviço
         ultimo_que_deu_servico = Militar.objects.get(ultimo_a_dar_servico=True)
         indice = militares.index(ultimo_que_deu_servico)
         nova_ordem = militares[indice + 1:] + militares[:indice + 1]
