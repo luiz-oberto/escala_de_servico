@@ -15,6 +15,7 @@ class Militar(models.Model):
     # disponibilidadde = models.BooleanField(default=True)
     ultimo_a_dar_servico = models.BooleanField(default=False)
 
+    # Método para salvar as alterções no banco de dados
     def save(self, *args, **kwargs):
         if self.ultimo_a_dar_servico:
             # Define todos os outros como False antes de salvar
@@ -23,6 +24,9 @@ class Militar(models.Model):
 
     def __str__(self) -> str:
         return f'{self.nome_de_guerra}'
+    
+    # def salvar_ultimo_que_deu_servico():
+
 
 
 
@@ -40,14 +44,14 @@ class Escala(models.Model):
 
     @classmethod
     def atualizar_escala(cls):
-        data_hoje = date.today()
-        ano_atual = data_hoje.year
-        mes_atual = data_hoje.month
-
-        ##### DATAS PARA TESTES #########
-        # data_hoje = date(2025, 2, 1)
+        # data_hoje = date.today()
         # ano_atual = data_hoje.year
         # mes_atual = data_hoje.month
+
+        ##### DATAS PARA TESTES #########
+        data_hoje = date(2025, 5, 1)
+        ano_atual = data_hoje.year
+        mes_atual = data_hoje.month
 
         # Altera o dia data atual para o primeiro dia do mês
         inicio_mes_atual = data_hoje.replace(day=1)
@@ -63,7 +67,9 @@ class Escala(models.Model):
             dias_da_semana = cls.generate_weekday(ano_atual, mes_atual)
 
             # Obter as pessoas e gerar nova escala para o mês
-            militares = list(Militar.objects.order_by('-antiguidade'))
+            # militares = list(Militar.objects.order_by('-antiguidade'))
+            
+            militares = cls.verify_last_duty()
 
             if militares:
                 indice = 0
@@ -71,14 +77,24 @@ class Escala(models.Model):
 
                 while indice < quantidade_de_dias:
                     data_escala = inicio_mes_atual + timedelta(days=indice)  # Soma mais um dia
-                    pessoa_escalada = militares[indice_militar % len(militares)]
+                    pessoa_escalada = militares[indice_militar % len(militares)] # 
 
                     if dias_da_semana[indice] in ['sábado', 'domingo']:
                         cls.objects.create(data=data_escala, dias_da_semana=dias_da_semana[indice], mes_referencia=inicio_mes_atual)
+
                     else:
                         cls.objects.create(data=data_escala, pessoa=pessoa_escalada, dias_da_semana=dias_da_semana[indice], mes_referencia=inicio_mes_atual)
 
                     indice += 1
+                    
+                    # Salvar o último que deu serviço no mês 
+                    if indice == quantidade_de_dias:
+                        militar = Militar.objects.get(nome_de_guerra=pessoa_escalada)
+                        militar.ultimo_a_dar_servico = True
+                        militar.save()
+
+                        
+
                     if dias_da_semana[indice - 1] not in ['sábado', 'domingo']:
                         indice_militar += 1
             
@@ -112,3 +128,23 @@ class Escala(models.Model):
 
         return dias_da_semana
 
+    # FUNÇÃO PARA ACERTAR A LISTA DO ÚLTIMO QUE DEU SERVIÇO
+    @staticmethod
+    def verify_last_duty():
+        militares = list(Militar.objects.order_by('-antiguidade'))
+        ultimo_que_deu_servico = ''
+        lista_atualizada = []
+
+        for militar in militares:
+            if militar.ultimo_a_dar_servico == True:
+                ultimo_que_deu_servico = militar
+            else:
+                lista_atualizada.append(militar)
+                
+                                      
+        if ultimo_que_deu_servico:
+            lista_atualizada.append(ultimo_que_deu_servico)
+        
+        print(lista_atualizada)
+
+        return lista_atualizada

@@ -31,18 +31,16 @@ def escala(request):
 
 
 
-def verify_last_duty():
-    # LÓGICA PARA ACERTAR A LISTA DO ÚLTIMO QUE DEU SERVIÇO
-    militares = list(Militar.objects.order_by('-antiguidade'))
-    lista_atualizada = []
-    for militar in militares:
-        if militar.ultimo_a_dar_servico == True:
-            # print(f'{militar.nome_de_guerra} foi o último a dar serviço')
-            ultimo_que_deu_servico = militar.nome_de_guerra
-        else:
-            # print(f'{militar.nome_de_guerra} não foi o último')
-            lista_atualizada.append(militar.nome_de_guerra)
+# # FUNÇÃO PARA ACERTAR A LISTA DO ÚLTIMO QUE DEU SERVIÇO
+# def verify_last_duty():
+#     militares = list(Militar.objects.order_by('-antiguidade'))
+#     lista_atualizada = []
+#     for militar in militares:
+#         if militar.ultimo_a_dar_servico == True:
+#             ultimo_que_deu_servico = militar.nome_de_guerra
+#         else:
+#             lista_atualizada.append(militar.nome_de_guerra)
 
-    lista_atualizada.append(ultimo_que_deu_servico)
-    return lista_atualizada
+#     lista_atualizada.append(ultimo_que_deu_servico)
+#     return lista_atualizada
         
