@@ -8,4 +8,4 @@ Este projeto utiliza:
 - banco de dados: SQLite (até agora)
 
 
-![image](https://github.com/user-attachments/assets/cbdefee4-9eaf-448a-9a78-06acce0254c7)
+![image](project-image.png)
