@@ -132,19 +132,10 @@ class Escala(models.Model):
     @staticmethod
     def verify_last_duty():
         militares = list(Militar.objects.order_by('-antiguidade'))
-        ultimo_que_deu_servico = ''
-        lista_atualizada = []
+        ultimo_que_deu_servico = Militar.objects.get(ultimo_a_dar_servico=True)
+        indice = militares.index(ultimo_que_deu_servico)
+        nova_ordem = militares[indice + 1:] + militares[:indice + 1]
 
-        for militar in militares:
-            if militar.ultimo_a_dar_servico == True:
-                ultimo_que_deu_servico = militar
-            else:
-                lista_atualizada.append(militar)
-                
-                                      
-        if ultimo_que_deu_servico:
-            lista_atualizada.append(ultimo_que_deu_servico)
-        
-        print(lista_atualizada)
+        print(nova_ordem)
 
-        return lista_atualizada
+        return nova_ordem
