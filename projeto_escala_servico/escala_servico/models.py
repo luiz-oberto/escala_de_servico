@@ -6,8 +6,6 @@ import locale
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
-# Create your models here.
-# mudar para Pessoal
 class Militar(models.Model):
     nome_de_guerra = models.CharField(max_length=50)
     graduacao = models.CharField(max_length=10)
@@ -34,8 +32,7 @@ class Escala(models.Model):
     dias_da_semana = models.CharField(max_length=50)
     pessoa = models.ForeignKey('Militar', on_delete=models.CASCADE, null=True, blank=True)
     mes_referencia = models.DateField(null=True, blank=True)
-    # mes = atributo que salvará o mês da escala
-    # ano = atributo que vai salvar o ano da escala
+
 
     def __str__(self):
         return f'{self.data} - {self.pessoa}'
@@ -64,8 +61,6 @@ class Escala(models.Model):
             # Pegar os dias da semana desse mês
             dias_da_semana = cls.generate_weekday(ano_atual, mes_atual)
 
-            # Obter as pessoas e gerar nova escala para o mês
-            # militares = list(Militar.objects.order_by('-antiguidade'))
             
             militares = cls.verify_last_duty()
 
@@ -130,7 +125,7 @@ class Escala(models.Model):
     @staticmethod
     def verify_last_duty():
         militares = list(Militar.objects.order_by('-antiguidade'))
-        # Ajustar para caso não haja ninguém que tenha dado o último serviço
+        # Ajustar para caso não haja ninguém que tenha dado o último serviço ##########################33
         ultimo_que_deu_servico = Militar.objects.get(ultimo_a_dar_servico=True)
         indice = militares.index(ultimo_que_deu_servico)
         nova_ordem = militares[indice + 1:] + militares[:indice + 1]
