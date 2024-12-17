@@ -26,19 +26,24 @@
           </thead>
           
           <tbody>
-            {% for dia in escala %}
-              {% if dia.dias_da_semana == 'sábado' or dia.dias_da_semana == 'domingo' %}
-                <tr>
-                  <td class="dia-mes">{{ dia.data|date:"d/m" }} - {{ dia.dias_da_semana }}</td>
-                  <td class="dia-mes"> - </td>
-                </tr>
-              {% else %}
-                <tr>
-                  <td class="dia-mes">{{ dia.data|date:"d/m" }} - {{ dia.dias_da_semana }}</td>
-                  <td class="dia-mes">{{ dia.pessoa.graduacao }} {{ dia.pessoa }}</td>
-                </tr>
-              {% endif %}
-            {% endfor %}
+            {% if escala %}
+              {% for dia in escala %}
+                {% if dia.dias_da_semana == 'sábado' or dia.dias_da_semana == 'domingo' %}
+                  <tr>
+                    <td class="dia-mes">{{ dia.data|date:"d/m" }} - {{ dia.dias_da_semana }}</td>
+                    <td class="dia-mes"> - </td>
+                  </tr>
+                {% else %}
+                  <tr>
+                    <td class="dia-mes">{{ dia.data|date:"d/m" }} - {{ dia.dias_da_semana }}</td>
+                    <td class="dia-mes">{{ dia.pessoa.graduacao }} {{ dia.pessoa }}</td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+            <!-- Colocar um aviso melhor estilizado para alertar que não há militares escalados. -->
+              <h3>Não há militares cadastrados no banco de dados.</h3>
+            {% endif %}
           </tbody>
         </table>
       </div>

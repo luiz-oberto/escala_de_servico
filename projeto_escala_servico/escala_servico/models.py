@@ -53,15 +53,17 @@ class Escala(models.Model):
         quantidade_de_dias = calendar.monthrange(ano_atual, mes_atual)[1]
 
         # Verificar se existe escala para o mês atual
+        print('verificando a escala mais atualizada...')
         escala_mes_atual = cls.objects.filter(mes_referencia=inicio_mes_atual)
         if not escala_mes_atual.exists():
+            print('Criando nova escala... AGUARDE')
             # Apagar a escala do mês anterior
             cls.objects.all().delete()
 
-            # Pegar os dias da semana desse mês
+            print('Achando os dias da semana...')
             dias_da_semana = cls.generate_weekday(ano_atual, mes_atual)
 
-            
+            print('Procurando por militares para escalar...')
             militares = cls.verify_last_duty()
 
             if militares:
@@ -94,6 +96,7 @@ class Escala(models.Model):
             else:
                 return print('Não há militares cadastrados.')
 
+        print('Escala criada com sucesso!')
         return data_hoje, cls.objects.filter(mes_referencia=inicio_mes_atual)
 
     @staticmethod
@@ -122,14 +125,30 @@ class Escala(models.Model):
         return dias_da_semana
 
     # FUNÇÃO PARA ACERTAR A LISTA DO ÚLTIMO QUE DEU SERVIÇO
+    '''
+    Algumas falhas ainda pode acontecer caso haja militares cadastrados porém sem ter um que tenha dado serviço
+    '''
     @staticmethod
     def verify_last_duty():
         militares = list(Militar.objects.order_by('-antiguidade'))
-        # Ajustar para caso não haja ninguém que tenha dado o último serviço ##########################33
-        ultimo_que_deu_servico = Militar.objects.get(ultimo_a_dar_servico=True)
-        indice = militares.index(ultimo_que_deu_servico)
-        nova_ordem = militares[indice + 1:] + militares[:indice + 1]
+        try:
+            ultimo_que_deu_servico = Militar.objects.get(ultimo_a_dar_servico=True)
+            indice = militares.index(ultimo_que_deu_servico)
+            nova_ordem = militares[indice + 1:] + militares[:indice + 1]
+            print('Nova sequencia criada com sucesso!')
+            return nova_ordem
+        except Exception as e:
+            print(f'Falha: {e}')
+            print(f'Nenhum militar deu o último serviço, reiniciando escala a partir do mais moderno... Aguarde')
+            # militar mais moderno (antigo) será o primeiro da escala
+            Escala.estabelecer_o_ultimo_que_deu_servico()
+            
 
-        print(nova_ordem)
 
-        return nova_ordem
+    @classmethod
+    def estabelecer_o_ultimo_que_deu_servico(cls):
+        mais_moderno = Militar.objects.order_by('-antiguidade').last()
+        mais_moderno.ultimo_a_dar_servico = True
+        mais_moderno.save()
+        cls.verify_last_duty()
+        return
