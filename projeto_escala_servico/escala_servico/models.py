@@ -12,6 +12,7 @@ class Militar(models.Model):
     antiguidade = models.IntegerField()
     # disponibilidadde = models.BooleanField(default=True)
     ultimo_a_dar_servico = models.BooleanField(default=False)
+    disponivel = models.BooleanField(default=True)
 
     # Método para salvar as alterções no banco de dados
     def save(self, *args, **kwargs):
